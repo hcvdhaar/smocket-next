@@ -1,19 +1,14 @@
 import React from 'react';
-import { Bookmarks } from './components/Bookmarks';
-import { promises as fs } from 'fs';
-import { Bookmark } from './types/bookmark.type';
+import prisma from '@/libs/db';
+import { createBookMark } from './actions';
 
-// This function runs on the server, since this a page component is by default a server component.
-// Therefor it to fetch the data before it renders the page.
-async function fetchFakeProducts(): Promise<Bookmark[]> {
-  const response = await fetch('https://fakestoreapi.com/products');
-  const data = await response.json();
-
-  return data;
+async function getBookMarks() {
+  const allUsers = await prisma.bookmark.findMany();
+  console.log(allUsers);
 }
 
 export default async function Home() {
-  const data = await fetchFakeProducts();
+  getBookMarks();
 
   return (
     <main className='flex-grow bg-orange-50'>
@@ -23,12 +18,22 @@ export default async function Home() {
         </aside>
 
         <div className='col-span-8'>
-          <div>
-            <input type='text' />
-          </div>
-          <div>
-            <Bookmarks data={data} />
-          </div>
+          <form className='flex flex-col space-y-5' action={createBookMark}>
+            <div>
+              <label htmlFor='title'>TITLE</label>
+              <input type='text' id='url' name='title' />
+            </div>
+            <div>
+              <label htmlFor='url'>URL</label>
+              <input type='text' id='url' name='url' />
+            </div>
+            <div>
+              <label htmlFor='decscription'>decscription</label>
+              <input type='text' id='decscription' name='desc' />
+            </div>
+
+            <button>send it</button>
+          </form>
         </div>
       </div>
     </main>

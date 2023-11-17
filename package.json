@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.13",
+    "@prisma/client": "^5.6.0",
     "framer-motion": "^10.16.4",
     "link-preview-js": "^3.0.5",
     "next": "14.0.0",
