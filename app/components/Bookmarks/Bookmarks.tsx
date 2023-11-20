@@ -12,7 +12,7 @@ export function Bookmarks({ data = [] }: { data: BookmarkResponse[] }) {
   return (
     <div className='border-1.5 h-full space-y-5'>
       {data &&
-        data.map((bookmark) => (
+        data.map((bookmark, index) => (
           <div key={bookmark.id} className='border-cyan-600 border-1.5 p-4'>
             <div className='flex justify-between'>
               {/* Card Header */}
@@ -35,7 +35,9 @@ export function Bookmarks({ data = [] }: { data: BookmarkResponse[] }) {
                 src={bookmark.defaultImageUrl}
                 width={300}
                 height={250}
+                quality={75}
                 alt={bookmark.title}
+                priority={index < 6}
               />
             )}
 
@@ -51,4 +53,5 @@ export function Bookmarks({ data = [] }: { data: BookmarkResponse[] }) {
 /**
  * TODO:
  * - Check this (optimizing) warning: https://nextjs.org/learn-pages-router/seo/web-performance/lcp
+ *   -> For now set priority for the first 6 images
  */
