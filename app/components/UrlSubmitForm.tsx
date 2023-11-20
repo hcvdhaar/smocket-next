@@ -1,4 +1,4 @@
-import { createBookmark } from '../actions';
+import { createBookmark } from '../actions/bookmark.actions';
 
 export const UrlSubmitForm = () => {
   return (

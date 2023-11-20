@@ -3,36 +3,31 @@
 import prisma from '@/libs/db';
 import { Prisma } from '@prisma/client';
 import { getLinkPreview } from 'link-preview-js';
-import { LinkPreviewResponseType } from './types';
+import { LinkPreviewResponseType } from '../types';
 import { revalidatePath } from 'next/cache';
 
-function bookmarkFactory(
-  linkPreview: LinkPreviewResponseType
-): Prisma.BookmarkCreateInput {
-  return {
-    url: linkPreview.url,
-    title: linkPreview.title,
-    description: linkPreview.description,
-    tags: [],
-    categories: [],
-    imageUrls: linkPreview.images,
-    defaultImageUrl: linkPreview.images[0],
-  };
+/**
+ * TODO:
+ * - Implement pagination.
+ * - Zod or Yup for validation
+ * - Better error handling
+ * - Seperate link preview to a seperate file/lib and improve it.
+ */
+
+export async function getBookMarks() {
+  const bookmarks = await prisma.bookmark.findMany();
+  return bookmarks;
 }
 
-// TODO: It seems it does not parse (redirects) to Medium articles.
 export async function createBookmark(formData: FormData) {
   const url = (formData.get('url') as string) ?? '';
 
-  // TODO: Better error handling.
   if (url === '') {
     return null;
   }
 
   const preview = (await getLinkPreview(url)) as LinkPreviewResponseType;
-
   const bookmark = bookmarkFactory(preview);
-
   const response = await prisma.bookmark.create({ data: bookmark });
 
   if (response) {
@@ -47,9 +42,21 @@ export async function deleteBookmark(id: string) {
     },
   });
 
-  console.log('response', response);
-
   if (response) {
     revalidatePath('/');
   }
+}
+
+function bookmarkFactory(
+  linkPreview: LinkPreviewResponseType
+): Prisma.BookmarkCreateInput {
+  return {
+    url: linkPreview.url,
+    title: linkPreview.title,
+    description: linkPreview.description,
+    tags: [],
+    categories: [],
+    imageUrls: linkPreview.images,
+    defaultImageUrl: linkPreview.images[0],
+  };
 }

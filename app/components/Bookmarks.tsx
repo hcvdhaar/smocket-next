@@ -2,7 +2,7 @@
 import React from 'react';
 import { BookmarkResponse } from '../types/bookmark.type';
 import Image from 'next/image';
-import { deleteBookmark } from '../actions';
+import { deleteBookmark } from '../actions/bookmark.actions';
 
 async function deleteBookmarkItem(id: string) {
   await deleteBookmark(id);

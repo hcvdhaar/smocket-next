@@ -27,7 +27,7 @@ export default function RootLayout({
             {/* children is basically the router slot where all the pages are being rendered */}
             {children}
 
-            <footer className='p-5'>I am a footer</footer>
+            <footer className='p-5  bg-purple-400'>I am a footer</footer>
           </div>
         </Providers>
       </body>
