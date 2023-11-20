@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  mongo:
+    build: ./mongo_rs
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: db
+      MONGO_REPLICA_HOST: 127.0.0.1
+      MONGO_REPLICA_PORT: '27017'
+    ports:
+      - 27017:27017
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'mongo',
+          'admin',
+          '--port',
+          '27017',
+          '--eval',
+          "db.adminCommand('ping')",
+        ]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - ./mongo_rs/data:/data/db
+volumes:
+  mongo_rs:
+    name: mongo_rs
+    driver: local
+# TODO: Create a prod and a dev compose file
+

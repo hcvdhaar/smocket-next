@@ -1,33 +1,32 @@
 import React from 'react';
-import { Bookmarks } from './components/Bookmarks';
-import { promises as fs } from 'fs';
-import { Bookmark } from './types/bookmark.type';
+import prisma from '@/libs/db';
+import { Bookmarks, UrlSubmitForm } from './components';
+import { BookmarkResponse } from './types/bookmark.type';
 
-// This function runs on the server, since this a page component is by default a server component.
-// Therefor it to fetch the data before it renders the page.
-async function fetchFakeProducts(): Promise<Bookmark[]> {
-  const response = await fetch('https://fakestoreapi.com/products');
-  const data = await response.json();
-
-  return data;
+async function getBookMarks() {
+  const bookmarks = await prisma.bookmark.findMany();
+  return bookmarks;
 }
 
 export default async function Home() {
-  const data = await fetchFakeProducts();
+  const bookmarks = await getBookMarks();
 
   return (
-    <main className='flex-grow bg-orange-50'>
-      <div className='grid grid-cols-12 gap-4'>
-        <aside className='col-span-4'>
+    <main className='flex-grow bg-gray-200 p-5'>
+      <div className='grid grid-cols-12 gap-4 h-full'>
+        <aside className='col-span-2 bg-slate-400'>
           <div className='sticky top-10'>Dit moet een sticky navbar zijn.</div>
         </aside>
 
         <div className='col-span-8'>
+          <UrlSubmitForm />
+
           <div>
-            <input type='text' />
-          </div>
-          <div>
-            <Bookmarks data={data} />
+            <div>
+              <h1>Filter and sorting bar and maybe a settings button</h1>
+            </div>
+            <h1>BOOKMARK COLLECTION</h1>
+            <Bookmarks data={bookmarks as unknown as BookmarkResponse[]} />
           </div>
         </div>
       </div>
