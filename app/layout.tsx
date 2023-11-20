@@ -22,10 +22,12 @@ export default function RootLayout({
           {/* This is the content container */}
           {/* To let the child with a flex: 1 stretch to the botton we need to set a min-height: 100vh here as well. */}
           {/* TODO: checkout why setting all these min-heights are needed. */}
-          <div className='relative flex flex-col space-y-5 h-screen'>
+          <div className='relative flex flex-col h-screen'>
             <NavBar />
             {/* children is basically the router slot where all the pages are being rendered */}
             {children}
+
+            <footer className='p-5'>I am a footer</footer>
           </div>
         </Providers>
       </body>

@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client';
+
 export type Tag = {
   id: number;
   label: string;
@@ -5,11 +7,4 @@ export type Tag = {
   updatedAt: Date;
 };
 
-export type Bookmark = {
-  id: number;
-  title: string;
-  price: string;
-  category: string;
-  description: string;
-  image: string;
-};
+export type BookmarkResponse = Prisma.BookmarkCreateInput;

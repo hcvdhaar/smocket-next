@@ -1,39 +1,35 @@
 import React from 'react';
 import prisma from '@/libs/db';
-import { createBookMark } from './actions';
+import { Bookmarks, UrlSubmitForm } from './components';
+import { BookmarkResponse } from './types/bookmark.type';
 
 async function getBookMarks() {
-  const allUsers = await prisma.bookmark.findMany();
-  console.log(allUsers);
+  const bookmarks = await prisma.bookmark.findMany();
+  return bookmarks;
 }
 
 export default async function Home() {
-  getBookMarks();
+  const bookmarks = await getBookMarks();
+
+  console.log('BOOKMARKS:', bookmarks);
 
   return (
-    <main className='flex-grow bg-orange-50'>
-      <div className='grid grid-cols-12 gap-4'>
-        <aside className='col-span-4'>
+    <main className='flex-grow bg-gray-200 p-5'>
+      <div className='grid grid-cols-12 gap-4 h-full'>
+        <aside className='col-span-2 bg-slate-400'>
           <div className='sticky top-10'>Dit moet een sticky navbar zijn.</div>
         </aside>
 
         <div className='col-span-8'>
-          <form className='flex flex-col space-y-5' action={createBookMark}>
-            <div>
-              <label htmlFor='title'>TITLE</label>
-              <input type='text' id='url' name='title' />
-            </div>
-            <div>
-              <label htmlFor='url'>URL</label>
-              <input type='text' id='url' name='url' />
-            </div>
-            <div>
-              <label htmlFor='decscription'>decscription</label>
-              <input type='text' id='decscription' name='desc' />
-            </div>
+          <UrlSubmitForm />
 
-            <button>send it</button>
-          </form>
+          <div>
+            <div>
+              <h1>Filter and sorting bar and maybe a settings button</h1>
+            </div>
+            <h1>BOOKMARK COLLECTION</h1>
+            <Bookmarks data={bookmarks as unknown as BookmarkResponse[]} />
+          </div>
         </div>
       </div>
     </main>
