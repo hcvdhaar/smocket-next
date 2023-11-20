@@ -11,8 +11,6 @@ async function getBookMarks() {
 export default async function Home() {
   const bookmarks = await getBookMarks();
 
-  console.log('BOOKMARKS:', bookmarks);
-
   return (
     <main className='flex-grow bg-gray-200 p-5'>
       <div className='grid grid-cols-12 gap-4 h-full'>

@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import { BookmarkResponse } from '../types/bookmark.type';
+import { BookmarkResponse } from '../../types/bookmark.type';
 import Image from 'next/image';
-import { deleteBookmark } from '../actions/bookmark.actions';
+import { deleteBookmark } from '../../actions/bookmark.actions';
 
 async function deleteBookmarkItem(id: string) {
   await deleteBookmark(id);
@@ -47,3 +47,8 @@ export function Bookmarks({ data = [] }: { data: BookmarkResponse[] }) {
     </div>
   );
 }
+
+/**
+ * TODO:
+ * - Check this (optimizing) warning: https://nextjs.org/learn-pages-router/seo/web-performance/lcp
+ */
