@@ -22,6 +22,7 @@ const config: Config = {
     colors: {
       dark: '#191D19',
       dark_gray: '#292F36',
+      dark_violet: '#14121F',
       yellow: '#FAFF00',
       blue: '#02A9EA',
       pink: '#FF01FB',
@@ -41,6 +42,6 @@ const config: Config = {
     extend: {},
   },
   darkMode: 'class',
-  plugins: [nextui(), tailwindForms, tailwindAspect],
+  plugins: [nextui(), tailwindForms(), tailwindAspect],
 };
 export default config;

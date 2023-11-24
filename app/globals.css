@@ -5,7 +5,7 @@
 /* Making sure the body stretches the body content on chrome mobile as well. */
 html {
   height: -webkit-fill-available;
-  background-color: #191d19;
+  background-color: #14121f;
 }
 
 body {
