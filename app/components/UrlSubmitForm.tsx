@@ -1,14 +1,10 @@
 import { createBookmark } from '../actions/bookmark.actions';
+import { BaseInput } from './BaseInput/BaseInput';
 
 export const UrlSubmitForm = () => {
   return (
     <form action={createBookmark}>
-      <input type='text' name='url' />
+      <BaseInput placeholder='Gimme an url and see the magic...' name='url' />
     </form>
   );
 };
-
-/**
- * TODO:
- * - Rename this component to something descriptive
- */

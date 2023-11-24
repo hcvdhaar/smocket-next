@@ -18,14 +18,24 @@ export default async function Home() {
           <div className='sticky top-10'>Dit moet een sticky navbar zijn.</div>
         </aside>
 
-        <div className='col-span-8'>
-          <UrlSubmitForm />
+        <div className='col-span-8 mt-4'>
+          <div className='mb-4'>
+            <UrlSubmitForm />
+          </div>
+
+          <div className='flex justify-evenly py-4 px-2 border-1 rounded-lg mb-4'>
+            <button className='border-2 border-gray-500 rounded-md p-2 py-1 text-sm'>
+              filter 1
+            </button>
+            <button className='border-2 border-gray-500 rounded-md p-2 py-1 text-sm'>
+              filter 1
+            </button>
+            <button className='border-2 border-gray-500 rounded-md p-2 py-1 text-sm'>
+              filter 1
+            </button>
+          </div>
 
           <div>
-            <div>
-              <h1>Filter and sorting bar and maybe a settings button</h1>
-            </div>
-
             <Bookmarks data={bookmarks as unknown as BookmarkResponse[]} />
           </div>
         </div>
