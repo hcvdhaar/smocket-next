@@ -15,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <body className='min-h-screen bg-slate-800'>
+    <html lang='en' className='bg-dark'>
+      <body className='min-h-screen'>
         <Providers>
           <div className='relative flex flex-col h-screen'>
             <NavBar />

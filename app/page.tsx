@@ -12,9 +12,9 @@ export default async function Home() {
   const bookmarks = await getBookMarks();
 
   return (
-    <main className='flex-grow bg-gray-200 p-5'>
+    <main className='flex-grow bg-gray-200'>
       <div className='grid grid-cols-12 gap-4 h-full'>
-        <aside className='col-span-2 bg-slate-400'>
+        <aside className='col-span-2 bg-dark_gray p-5'>
           <div className='sticky top-10'>Dit moet een sticky navbar zijn.</div>
         </aside>
 
@@ -25,7 +25,7 @@ export default async function Home() {
             <div>
               <h1>Filter and sorting bar and maybe a settings button</h1>
             </div>
-            <h1>BOOKMARK COLLECTION</h1>
+
             <Bookmarks data={bookmarks as unknown as BookmarkResponse[]} />
           </div>
         </div>

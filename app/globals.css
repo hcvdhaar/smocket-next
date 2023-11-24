@@ -5,8 +5,14 @@
 /* Making sure the body stretches the body content on chrome mobile as well. */
 html {
   height: -webkit-fill-available;
+  background-color: #191d19;
 }
 
 body {
+  color: #fffeff;
   min-height: -webkit-fill-available;
+}
+
+* {
+  box-sizing: border-box;
 }
