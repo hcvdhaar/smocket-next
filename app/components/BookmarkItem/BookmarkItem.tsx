@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { deleteBookmark } from '@/app/actions/bookmark.actions';
 import { BookmarkResponse } from '@/app/types/bookmark.type';
@@ -18,7 +20,7 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
   return (
     <div
       key={bookmark.id}
-      className='border-3 rounded-lg p-4 border-dark_gray w-full'
+      className='border-3 rounded-lg p-4 border-dark_gray w-full col-span-12 tablet-up:col-span-6 laptop-up:col-span-4 desktop-up:col-span-3'
     >
       <div className='flex justify-between items-center py-2'>
         <h3 className='font-bold text-lg'>{bookmark.title}</h3>

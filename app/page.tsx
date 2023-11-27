@@ -1,19 +1,15 @@
 import React from 'react';
 import { Bookmarks, UrlSubmitForm } from './components';
-import { BookmarkResponse } from './types/bookmark.type';
-import { getBookMarks } from './actions/bookmark.actions';
 
 export default async function Home() {
-  const { data } = await getBookMarks();
-
   return (
     <main className='flex-grow bg-gray-200'>
-      <div className='grid grid-cols-12 gap-4 h-full'>
-        <aside className='col-span-2 bg-dark_gray p-5'>
+      <div className='flex flex-row'>
+        <aside className='bg-dark_gray p-5 tablet-landscape-up:w-60 hidden tablet-landscape-up:block'>
           <div className='sticky top-10'>Dit moet een sticky navbar zijn.</div>
         </aside>
 
-        <div className='col-span-8 mt-4'>
+        <div className='flex-1 p-5'>
           <div className='mb-4'>
             <UrlSubmitForm />
           </div>
@@ -30,13 +26,7 @@ export default async function Home() {
             </button>
           </div>
 
-          <div>
-            {data && data.length > 0 ? (
-              <Bookmarks data={data as unknown as BookmarkResponse[]} />
-            ) : (
-              <div>No Bookmarks found</div>
-            )}
-          </div>
+          <Bookmarks />
         </div>
       </div>
     </main>

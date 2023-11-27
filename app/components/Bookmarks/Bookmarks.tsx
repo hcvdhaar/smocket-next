@@ -1,15 +1,21 @@
-'use client';
-import React from 'react';
-import { BookmarkResponse } from '../../types/bookmark.type';
-import { BookmarkItem } from '../BookmarkItem';
+'use server';
 
-export function Bookmarks({ data = [] }: { data: BookmarkResponse[] }) {
+import React from 'react';
+import { BookmarkItem } from '../BookmarkItem';
+import { getBookMarks } from '@/app/actions/bookmark.actions';
+
+export async function Bookmarks() {
+  const { data } = await getBookMarks();
+
   return (
-    <div className='h-full space-y-5 grid'>
-      {data &&
+    <div className='grid grid-cols-12 gap-4'>
+      {data ? (
         data.map((bookmark, index) => (
           <BookmarkItem key={bookmark.id} bookmark={bookmark} index={index} />
-        ))}
+        ))
+      ) : (
+        <div>No bookmarks found</div>
+      )}
     </div>
   );
 }
