@@ -18,18 +18,18 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
   return (
     <div
       key={bookmark.id}
-      className='border-1 rounded-lg p-4 bg-dark_gray w-full'
+      className='border-3 rounded-lg p-4 border-dark_gray w-full'
     >
       <div className='flex justify-between items-center py-2'>
         <h3 className='font-bold text-lg'>{bookmark.title}</h3>
 
         <div className='flex gap-2'>
-          <button className='border-2 border-gray-500 rounded-md p-2 py-1 text-sm'>
+          <button className='border-2 border-dark_gray rounded-md p-2 py-1 text-sm'>
             edit
           </button>
 
           <button
-            className='border-2 border-red-500 rounded-md p-2 py-1 text-sm'
+            className='border-2 border-dark_gray rounded-md p-2 py-1 text-sm'
             onClick={() => deleteBookmarkItem(bookmark.id!)}
           >
             delete

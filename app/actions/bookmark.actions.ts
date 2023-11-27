@@ -14,27 +14,109 @@ import { revalidatePath } from 'next/cache';
  * - Seperate link preview to a seperate file/lib and improve it.
  */
 
-export async function getBookMarks() {
-  const bookmarks = await prisma.bookmark.findMany();
-  return bookmarks;
+type ActionResponse<DataType> = {
+  data: DataType | null;
+  error: { message: string } | null;
+};
+
+function createResponse<DataType>(
+  data: DataType | null,
+  errorMessage: string | null
+): ActionResponse<DataType> {
+  const error = errorMessage ? { message: errorMessage } : null;
+
+  return {
+    data,
+    error,
+  };
 }
 
+async function handleRequest<T>(dbAction: (args?: any) => Promise<T>) {
+  try {
+    const response = await dbAction();
+
+    return createResponse(response, null);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      return createResponse(null, error.message);
+    }
+
+    return createResponse(null, 'Something went wrong');
+  }
+}
+
+// Get all bookmarks
+export async function getBookMarks(): Promise<
+  ActionResponse<Prisma.BookmarkCreateInput[] | null>
+> {
+  return handleRequest(prisma.bookmark.findMany);
+}
+
+// Get a single bookmark
+export async function getBookMark(id: string) {
+  try {
+    const bookmark = await prisma.bookmark.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return createResponse(bookmark, null);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      return createResponse(null, error.message);
+    }
+
+    return createResponse(null, 'Something went wrong');
+  }
+}
+
+// Create a bookmark
 export async function createBookmark(formData: FormData) {
   const url = (formData.get('url') as string) ?? '';
 
   if (url === '') {
-    return null;
+    return createResponse(null, 'Bookmark URL is required');
   }
 
-  const preview = (await getLinkPreview(url)) as LinkPreviewResponseType;
+  try {
+    const preview = (await getLinkPreview(url)) as LinkPreviewResponseType;
+    const bookmark = bookmarkFactory(preview);
+    const response = await prisma.bookmark.create({ data: bookmark });
+
+    if (response) {
+      revalidatePath('/');
+    }
+
+    return createResponse(response, null);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      return createResponse(null, error.message);
+    }
+
+    return createResponse(null, 'Something went wrong');
+  }
+}
+
+// Update a bookmark
+// TODO: Some proper error handling
+export async function updateBookmark(id: string, formData: FormData) {
+  const preview = {} as LinkPreviewResponseType;
+
   const bookmark = bookmarkFactory(preview);
-  const response = await prisma.bookmark.create({ data: bookmark });
+  const response = await prisma.bookmark.update({
+    where: {
+      id,
+    },
+    data: bookmark,
+  });
 
   if (response) {
     revalidatePath('/');
   }
 }
 
+// Delete a bookmark
 export async function deleteBookmark(id: string) {
   const response = await prisma.bookmark.delete({
     where: {

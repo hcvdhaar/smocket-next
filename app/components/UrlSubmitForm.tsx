@@ -6,7 +6,7 @@ export const UrlSubmitForm = () => {
   return (
     <form action={createBookmark} className='flex gap-2'>
       <BaseInput placeholder='Gimme an url and see the magic...' name='url' />
-      <BaseButton>Create bookmark</BaseButton>
+      <BaseButton type='submit'>Create bookmark</BaseButton>
     </form>
   );
 };

@@ -1,15 +1,10 @@
 import React from 'react';
-import prisma from '@/libs/db';
 import { Bookmarks, UrlSubmitForm } from './components';
 import { BookmarkResponse } from './types/bookmark.type';
-
-async function getBookMarks() {
-  const bookmarks = await prisma.bookmark.findMany();
-  return bookmarks;
-}
+import { getBookMarks } from './actions/bookmark.actions';
 
 export default async function Home() {
-  const bookmarks = await getBookMarks();
+  const { data } = await getBookMarks();
 
   return (
     <main className='flex-grow bg-gray-200'>
@@ -23,20 +18,24 @@ export default async function Home() {
             <UrlSubmitForm />
           </div>
 
-          <div className='flex justify-evenly py-4 px-2 border-1 rounded-lg mb-4'>
-            <button className='border-2 border-gray-500 rounded-md p-2 py-1 text-sm'>
+          <div className='flex justify-evenly py-4 px-2 border-3 border-dark_gray rounded-lg mb-4'>
+            <button className='border-2 border-dark_gray rounded-md p-2 py-1 text-sm'>
               filter 1
             </button>
-            <button className='border-2 border-gray-500 rounded-md p-2 py-1 text-sm'>
+            <button className='border-2 border-dark_gray rounded-md p-2 py-1 text-sm'>
               filter 1
             </button>
-            <button className='border-2 border-gray-500 rounded-md p-2 py-1 text-sm'>
+            <button className='border-2 border-dark_gray rounded-md p-2 py-1 text-sm'>
               filter 1
             </button>
           </div>
 
           <div>
-            <Bookmarks data={bookmarks as unknown as BookmarkResponse[]} />
+            {data && data.length > 0 ? (
+              <Bookmarks data={data as unknown as BookmarkResponse[]} />
+            ) : (
+              <div>No Bookmarks found</div>
+            )}
           </div>
         </div>
       </div>

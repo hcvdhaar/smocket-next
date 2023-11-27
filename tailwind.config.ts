@@ -21,7 +21,7 @@ const config: Config = {
   theme: {
     colors: {
       dark: '#191D19',
-      dark_gray: '#292F36',
+      dark_gray: '#484848',
       dark_violet: '#14121F',
       yellow: '#FAFF00',
       blue: '#02A9EA',

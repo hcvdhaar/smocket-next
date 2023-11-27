@@ -6,7 +6,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
   ({ type = 'text', ...rest }, ref) => {
     return (
       <input
-        className='w-full border-2 border-gray-500 rounded-md bg-dark flex-1'
+        className='w-full border-2 border-dark_gray rounded-md bg-dark flex-1'
         type={type}
         ref={ref}
         {...rest}
