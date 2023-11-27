@@ -3,6 +3,18 @@
 import Image from 'next/image';
 import { deleteBookmark } from '@/app/actions/bookmark.actions';
 import { BookmarkResponse } from '@/app/types/bookmark.type';
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Checkbox,
+  Input,
+  Link,
+} from '@nextui-org/react';
 
 interface BookmarkItemProps {
   bookmark: BookmarkResponse;
@@ -17,6 +29,8 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
   bookmark,
   index,
 }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <div
       key={bookmark.id}
@@ -26,16 +40,11 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
         <h3 className='font-bold text-lg'>{bookmark.title}</h3>
 
         <div className='flex gap-2'>
-          <button className='border-2 border-dark_gray rounded-md p-2 py-1 text-sm'>
-            edit
-          </button>
+          <Button onPress={onOpen}>edit</Button>
 
-          <button
-            className='border-2 border-dark_gray rounded-md p-2 py-1 text-sm'
-            onClick={() => deleteBookmarkItem(bookmark.id!)}
-          >
+          <Button onClick={() => deleteBookmarkItem(bookmark.id!)}>
             delete
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -56,6 +65,34 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
       <a href={bookmark.url} target='_blank'>
         Go to Article
       </a>
+
+      {/* MODAL */}
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='center'>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className='flex flex-col gap-1'>Log in</ModalHeader>
+              <ModalBody>
+                <Input
+                  autoFocus
+                  label='Tag name'
+                  placeholder='Enter a tag'
+                  variant='bordered'
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color='danger' variant='flat' onPress={onClose}>
+                  Close
+                </Button>
+                <Button color='primary' onPress={onClose}>
+                  Add
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

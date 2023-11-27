@@ -42,6 +42,6 @@ const config: Config = {
     extend: {},
   },
   darkMode: 'class',
-  plugins: [nextui(), tailwindForms(), tailwindAspect],
+  plugins: [nextui(), tailwindAspect],
 };
 export default config;
