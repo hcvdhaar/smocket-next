@@ -21,7 +21,6 @@ export async function Bookmarks() {
 }
 
 /**
- * TODO:
  * - Check this (optimizing) warning: https://nextjs.org/learn-pages-router/seo/web-performance/lcp
  *   -> For now set priority for the first 6 images
  */

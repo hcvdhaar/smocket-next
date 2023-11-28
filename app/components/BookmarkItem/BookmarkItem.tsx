@@ -14,6 +14,7 @@ import {
   Checkbox,
   Input,
   Link,
+  Chip,
 } from '@nextui-org/react';
 
 interface BookmarkItemProps {
@@ -34,37 +35,84 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
   return (
     <div
       key={bookmark.id}
-      className='border-3 rounded-lg p-4 border-dark_gray w-full col-span-12 tablet-up:col-span-6 laptop-up:col-span-4 desktop-up:col-span-3 desktop-large-up:col-span-2'
+      className='border-3 rounded-lg p-4 border-dark_gray w-full col-span-12 tablet-up:col-span-6 laptop-up:col-span-4 desktop-up:col-span-3 desktop-large-up:col-span-2 flex flex-col gap-4'
     >
-      <div className='flex justify-between items-center py-2'>
-        <h3 className='font-bold text-lg'>{bookmark.title}</h3>
-
-        <div className='flex gap-2'>
-          <Button onPress={onOpen}>edit</Button>
-
-          <Button onClick={() => deleteBookmarkItem(bookmark.id!)}>
-            delete
-          </Button>
-        </div>
+      <div className='flex-grow'>
+        <h3 className='font-bold text-lg'>
+          <a
+            href={bookmark.url}
+            target='_blank'
+            className='hover:underline decoration-2'
+          >
+            {bookmark.title}
+          </a>
+        </h3>
       </div>
 
-      {/* <p>{bookmark.description}</p> */}
+      <div className='flex gap-2 flex-wrap '>
+        <Chip variant='flat' color='warning'>
+          JS
+        </Chip>
+
+        <Chip variant='flat' color='primary'>
+          React
+        </Chip>
+
+        <Chip variant='flat' color='success'>
+          Node JS
+        </Chip>
+
+        <Chip variant='flat' color='warning'>
+          + Add tag
+        </Chip>
+      </div>
 
       {bookmark.defaultImageUrl && (
-        <Image
-          src={bookmark.defaultImageUrl}
-          width={300}
-          height={250}
-          className='rounded-lg w-full h-36 object-cover'
-          quality={75}
-          alt={bookmark.title}
-          priority={index < 6}
-        />
-      )}
+        <div className='flex flex-col gap-4'>
+          <Image
+            src={bookmark.defaultImageUrl}
+            width={300}
+            height={250}
+            className='rounded-lg w-full h-36 object-cover'
+            quality={75}
+            alt={bookmark.title}
+            priority={index < 6}
+          />
+          <div className='flex gap-4 justify-end'>
+            <Button
+              size='sm'
+              color='default'
+              variant='bordered'
+              aria-label='Add a tag'
+              className='text-white opacity-50 hover:opacity-100'
+              onPress={onOpen}
+            >
+              Add a tag
+            </Button>
 
-      <a href={bookmark.url} target='_blank'>
-        Go to Article
-      </a>
+            <Button
+              size='sm'
+              color='default'
+              variant='bordered'
+              aria-label='edit bookmark'
+              className='text-white opacity-50 hover:opacity-100'
+            >
+              Edit
+            </Button>
+
+            <Button
+              size='sm'
+              color='default'
+              variant='bordered'
+              aria-label='delete bookmark'
+              className='text-white opacity-50 hover:opacity-100 hover:text-danger hover:border-danger'
+              onPress={() => deleteBookmarkItem(bookmark.id!)}
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* MODAL */}
 
