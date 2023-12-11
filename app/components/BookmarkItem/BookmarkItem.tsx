@@ -11,11 +11,10 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Checkbox,
   Input,
-  Link,
   Chip,
 } from '@nextui-org/react';
+import { Tags } from '../Tags/Tags';
 
 interface BookmarkItemProps {
   bookmark: BookmarkResponse;
@@ -49,23 +48,7 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
         </h3>
       </div>
 
-      <div className='flex gap-2 flex-wrap '>
-        <Chip variant='flat' color='warning'>
-          JS
-        </Chip>
-
-        <Chip variant='flat' color='primary'>
-          React
-        </Chip>
-
-        <Chip variant='flat' color='success'>
-          Node JS
-        </Chip>
-
-        <Chip variant='flat' color='warning'>
-          + Add tag
-        </Chip>
-      </div>
+      <Tags tags={bookmark.tags as any} />
 
       {bookmark.defaultImageUrl && (
         <div className='flex flex-col gap-4'>
@@ -78,41 +61,41 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
             alt={bookmark.title}
             priority={index < 6}
           />
-          <div className='flex gap-4 justify-end'>
-            <Button
-              size='sm'
-              color='default'
-              variant='bordered'
-              aria-label='Add a tag'
-              className='text-white opacity-50 hover:opacity-100'
-              onPress={onOpen}
-            >
-              Add a tag
-            </Button>
-
-            <Button
-              size='sm'
-              color='default'
-              variant='bordered'
-              aria-label='edit bookmark'
-              className='text-white opacity-50 hover:opacity-100'
-            >
-              Edit
-            </Button>
-
-            <Button
-              size='sm'
-              color='default'
-              variant='bordered'
-              aria-label='delete bookmark'
-              className='text-white opacity-50 hover:opacity-100 hover:text-danger hover:border-danger'
-              onPress={() => deleteBookmarkItem(bookmark.id!)}
-            >
-              Delete
-            </Button>
-          </div>
         </div>
       )}
+      <div className='flex gap-4 justify-end'>
+        <Button
+          size='sm'
+          color='default'
+          variant='bordered'
+          aria-label='Add a tag'
+          className='text-white opacity-50 hover:opacity-100'
+          onPress={onOpen}
+        >
+          Add a tag
+        </Button>
+
+        <Button
+          size='sm'
+          color='default'
+          variant='bordered'
+          aria-label='edit bookmark'
+          className='text-white opacity-50 hover:opacity-100'
+        >
+          Edit
+        </Button>
+
+        <Button
+          size='sm'
+          color='default'
+          variant='bordered'
+          aria-label='delete bookmark'
+          className='text-white opacity-50 hover:opacity-100 hover:text-danger hover:border-danger'
+          onPress={() => deleteBookmarkItem(bookmark.id!)}
+        >
+          Delete
+        </Button>
+      </div>
 
       {/* MODAL */}
 
@@ -127,6 +110,7 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
                   label='Tag name'
                   placeholder='Enter a tag'
                   variant='bordered'
+                  className='text-dark'
                 />
               </ModalBody>
               <ModalFooter>

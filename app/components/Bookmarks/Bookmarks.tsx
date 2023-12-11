@@ -7,11 +7,17 @@ import { getBookMarks } from '@/app/actions/bookmark.actions';
 export async function Bookmarks() {
   const { data } = await getBookMarks();
 
+  console.log(data);
+
   return (
     <div className='grid grid-cols-12 gap-4'>
       {data ? (
         data.map((bookmark, index) => (
-          <BookmarkItem key={bookmark.id} bookmark={bookmark} index={index} />
+          <BookmarkItem
+            key={bookmark.id}
+            bookmark={bookmark as any}
+            index={index}
+          />
         ))
       ) : (
         <div>No bookmarks found</div>

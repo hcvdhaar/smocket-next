@@ -46,10 +46,22 @@ async function handleRequest<T>(dbAction: (args?: any) => Promise<T>) {
 }
 
 // Get all bookmarks
-export async function getBookMarks(): Promise<
-  ActionResponse<Prisma.BookmarkCreateInput[] | null>
-> {
-  return handleRequest(prisma.bookmark.findMany);
+export async function getBookMarks() {
+  try {
+    const bookmark = await prisma.bookmark.findMany({
+      include: {
+        tags: true,
+      },
+    });
+
+    return createResponse(bookmark, null);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      return createResponse(null, error.message);
+    }
+
+    return createResponse(null, 'Something went wrong');
+  }
 }
 
 // Get a single bookmark
@@ -82,7 +94,14 @@ export async function createBookmark(formData: FormData) {
   try {
     const preview = (await getLinkPreview(url)) as LinkPreviewResponseType;
     const bookmark = bookmarkFactory(preview);
-    const response = await prisma.bookmark.create({ data: bookmark });
+    const response = await prisma.bookmark.create({
+      data: {
+        ...bookmark,
+        tags: {
+          create: [{ name: 'Angular' }, { name: 'OOP Design Patterns' }],
+        },
+      },
+    });
 
     if (response) {
       revalidatePath('/');
@@ -99,7 +118,6 @@ export async function createBookmark(formData: FormData) {
 }
 
 // Update a bookmark
-// TODO: Some proper error handling
 export async function updateBookmark(id: string, formData: FormData) {
   const preview = {} as LinkPreviewResponseType;
 
@@ -136,7 +154,7 @@ function bookmarkFactory(
     url: linkPreview.url,
     title: linkPreview.title,
     description: linkPreview.description,
-    tags: [],
+    tags: undefined,
     categories: [],
     imageUrls: linkPreview.images,
     defaultImageUrl: linkPreview.images[0],
