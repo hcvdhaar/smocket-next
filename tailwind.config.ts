@@ -19,6 +19,7 @@ const config: Config = {
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    // TODO: update colors according to the designs to be made!
     colors: {
       dark: '#191D19',
       dark_gray: '#484848',
@@ -30,7 +31,6 @@ const config: Config = {
       white: '#FFFEFF',
     },
     screens: {
-      'mobile-only': { max: `${(BREAKPOINT_TABLET_PX - 1) / EM_BASE_SIZE}em` }, // <= 599
       'tablet-up': `${BREAKPOINT_TABLET_PX / EM_BASE_SIZE}em`, // 600+
       'tablet-landscape-up': `${
         BREAKPOINT_TABLET_LANDSCAPE_PX / EM_BASE_SIZE
@@ -42,6 +42,6 @@ const config: Config = {
     extend: {},
   },
   darkMode: 'class',
-  plugins: [nextui(), tailwindForms(), tailwindAspect],
+  plugins: [nextui(), tailwindAspect],
 };
 export default config;

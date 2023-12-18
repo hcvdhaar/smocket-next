@@ -8,8 +8,7 @@ datasource db {
 }
 
 model Bookmark {
-  // This the general annotation for defining primary keys in MongoDB/Prisma
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
   url  String
   title String
   createdAt DateTime @default(now())
@@ -17,7 +16,14 @@ model Bookmark {
   description String?
   defaultImageUrl String?
   imageUrls String[]
-  tags String[]
+  tags Tag[] @relation(references: [id], fields: [tagIds])
+  tagIds String[] @db.ObjectId
   categories String[]
 }
 
+model Tag {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  bookmarks Bookmark[] @relation(references: [id], fields: [bookmarkIds])
+  bookmarkIds String[] @db.ObjectId
+}
