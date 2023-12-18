@@ -15,7 +15,6 @@ import {
   Button,
   useDisclosure,
   Input,
-  Chip,
 } from '@nextui-org/react';
 import { Tags } from '../Tags/Tags';
 import { useState } from 'react';
@@ -67,6 +66,7 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
             {bookmark.title}
           </a>
         </h3>
+        <p>{bookmark.createdAt?.toString() ?? ''}</p>
       </div>
 
       <Tags tags={bookmark.tags as any} />

@@ -16,11 +16,3 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
 );
 
 BaseInput.displayName = 'BaseInput';
-
-/**
- * STATUS:
- * - focus
- * - hover
- * - disabled
- * - error
- */

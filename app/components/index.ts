@@ -3,6 +3,6 @@ export * from './Bookmarks';
 export * from './BookmarkItem';
 export * from './Tags';
 export * from './Sidebar';
-export { UrlSubmitForm } from './UrlSubmitForm';
+export * from './BaseButton';
+export * from './UrlSubmitForm';
 /* Append here */
-export * from './NogEenTest';

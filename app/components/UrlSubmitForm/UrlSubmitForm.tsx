@@ -1,6 +1,6 @@
-import { createBookmark } from '../actions/bookmark.actions';
-import { BaseButton } from './BaseButton/BaseButton';
-import { BaseInput } from './BaseInput/BaseInput';
+import { createBookmark } from '../../actions/bookmark.actions';
+import { BaseButton } from '../BaseButton/BaseButton';
+import { BaseInput } from '../BaseInput/BaseInput';
 
 export const UrlSubmitForm = () => {
   return (
