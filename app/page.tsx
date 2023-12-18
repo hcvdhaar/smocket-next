@@ -1,4 +1,3 @@
-import React from 'react';
 import { Bookmarks, Sidebar, UrlSubmitForm } from './components';
 
 export default async function Home() {
