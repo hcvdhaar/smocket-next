@@ -7,8 +7,6 @@ import { getBookMarks } from '@/app/actions/bookmark.actions';
 export async function Bookmarks() {
   const { data } = await getBookMarks();
 
-  console.log(data);
-
   return (
     <div className='grid grid-cols-12 gap-4'>
       {data ? (

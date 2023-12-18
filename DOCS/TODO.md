@@ -1,16 +1,22 @@
 # TODO
 
-## MVP
+DOING:
 
 - CRUD Bookmark
 - CRUD Tags
-- CRUD Categories
-- Update Schema with bookmark / tag / categoriy relations.
+  - Update Schema with bookmark / tag / categoriy relations.
+
+TODOs:
+
+- Authentication
+- Download images and store in own bucket
 - Deploy to prod
 - Pagination.
 - Styling v0.1
 - Filter opties
 - Sorteer opties
+- CRUD Categories
+- Refactor
 
 ## Resources
 

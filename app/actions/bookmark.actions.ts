@@ -134,11 +134,65 @@ export async function updateBookmark(id: string, formData: FormData) {
   }
 }
 
+export async function updateBookmarkWithTags({
+  bookmarkId,
+  tags,
+}: {
+  bookmarkId: string;
+  tags: string[];
+}) {
+  const requestCreateTags = tags.map((tag) => {
+    return {
+      name: tag,
+    };
+  });
+
+  const bookmark = await prisma.bookmark.update({
+    where: {
+      id: bookmarkId,
+    },
+    data: {
+      tags: {
+        create: requestCreateTags,
+      },
+    },
+  });
+
+  if (bookmark) {
+    revalidatePath('/');
+  }
+}
+
 // Delete a bookmark
 export async function deleteBookmark(id: string) {
   const response = await prisma.bookmark.delete({
     where: {
       id,
+    },
+  });
+
+  if (response) {
+    revalidatePath('/');
+  }
+}
+
+export async function deleteTagOnBookmark({
+  bookmarkId,
+  tagId,
+}: {
+  bookmarkId: string;
+  tagId: string;
+}) {
+  const response = await prisma.bookmark.update({
+    where: {
+      id: bookmarkId,
+    },
+    data: {
+      tags: {
+        delete: {
+          id: tagId,
+        },
+      },
     },
   });
 

@@ -1,7 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { deleteBookmark } from '@/app/actions/bookmark.actions';
+import {
+  deleteBookmark,
+  updateBookmarkWithTags,
+} from '@/app/actions/bookmark.actions';
 import { BookmarkResponse } from '@/app/types/bookmark.type';
 import {
   Modal,
@@ -15,6 +18,7 @@ import {
   Chip,
 } from '@nextui-org/react';
 import { Tags } from '../Tags/Tags';
+import { useState } from 'react';
 
 interface BookmarkItemProps {
   bookmark: BookmarkResponse;
@@ -30,6 +34,23 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
   index,
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const [selectedId, setSelectedId] = useState<string>();
+
+  const [tagsInput, setTagsInput] = useState<string>('');
+
+  const openModel = (id: string) => {
+    setSelectedId(id);
+    onOpen();
+  };
+
+  const onUpdateWithTags = () => {
+    console.log(selectedId);
+    updateBookmarkWithTags({
+      bookmarkId: selectedId!,
+      tags: tagsInput.split(','),
+    });
+  };
 
   return (
     <div
@@ -70,7 +91,7 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
           variant='bordered'
           aria-label='Add a tag'
           className='text-white opacity-50 hover:opacity-100'
-          onPress={onOpen}
+          onPress={() => openModel(bookmark.id!)}
         >
           Add a tag
         </Button>
@@ -108,16 +129,24 @@ export const BookmarkItem: React.FC<BookmarkItemProps> = ({
                 <Input
                   autoFocus
                   label='Tag name'
-                  placeholder='Enter a tag'
+                  placeholder='Enter a tag, when multiple separate with comma'
                   variant='bordered'
                   className='text-dark'
+                  value={tagsInput}
+                  onChange={(e) => setTagsInput(e.target.value)}
                 />
               </ModalBody>
               <ModalFooter>
                 <Button color='danger' variant='flat' onPress={onClose}>
                   Close
                 </Button>
-                <Button color='primary' onPress={onClose}>
+                <Button
+                  color='primary'
+                  onPress={() => {
+                    onUpdateWithTags();
+                    onClose();
+                  }}
+                >
                   Add
                 </Button>
               </ModalFooter>

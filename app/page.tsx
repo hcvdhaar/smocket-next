@@ -4,7 +4,7 @@ import { Bookmarks, UrlSubmitForm } from './components';
 export default async function Home() {
   return (
     <main className='flex-grow bg-gray-200'>
-      <div className='flex flex-row'>
+      <div className='flex flex-row h-full'>
         <aside className='bg-dark_gray p-5 tablet-landscape-up:w-60 hidden tablet-landscape-up:block'>
           <div className='sticky top-10'>Dit moet een sticky navbar zijn.</div>
         </aside>
