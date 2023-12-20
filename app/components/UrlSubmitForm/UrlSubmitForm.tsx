@@ -8,8 +8,14 @@ import { BaseInput } from '../BaseInput/BaseInput';
 const createBookmarkItem = async (formdata: FormData) => {
   const { data, error } = await createBookmark(formdata);
 
-  console.log('response from createBookmarkItem', data);
-  console.log('error?', error);
+  // TODO: add a toast message or some other feedback
+  if (data) {
+    console.log('created a bookmark!', data);
+  }
+
+  if (!!error) {
+    console.error('error creating bookmark');
+  }
 };
 
 export const UrlSubmitForm = () => {
