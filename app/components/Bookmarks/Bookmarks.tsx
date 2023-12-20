@@ -5,7 +5,11 @@ import { BookmarkItem } from '../BookmarkItem';
 import { getBookMarks } from '@/app/actions/bookmark.actions';
 
 export async function Bookmarks() {
-  const { data } = await getBookMarks();
+  const { data, error } = await getBookMarks();
+
+  if (error) {
+    return <div>Error loading bookmarks</div>;
+  }
 
   return (
     <div className='grid grid-cols-12 gap-4'>

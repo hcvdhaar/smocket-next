@@ -10,7 +10,7 @@ export const Tags: React.FC<TagsProps> = ({ tags }) => {
   return (
     <div className='flex gap-2 flex-wrap '>
       {tags?.map((tag) => (
-        <Chip key='tag' variant='flat' color='warning'>
+        <Chip key={tag.id} variant='flat' color='warning'>
           {tag.name}
         </Chip>
       ))}
