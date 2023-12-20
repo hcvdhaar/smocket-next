@@ -5,63 +5,25 @@ import { Prisma } from '@prisma/client';
 import { getLinkPreview } from 'link-preview-js';
 import { LinkPreviewResponseType } from '../types';
 import { revalidatePath } from 'next/cache';
+import { createResponse, handleRequest } from './helpers';
+import { sleep } from '../utils/sleep';
 
 /**
  * TODO:
  * - Implement pagination.
  * - Zod or Yup for validation
- * - Better error handling
  * - Seperate link preview to a seperate file/lib and improve it.
  */
 
-type ActionResponse<DataType> = {
-  data: DataType | null;
-  error: { message: string } | null;
-};
-
-function createResponse<DataType>(
-  data: DataType | null,
-  errorMessage: string | null
-): ActionResponse<DataType> {
-  const error = errorMessage ? { message: errorMessage } : null;
-
-  return {
-    data,
-    error,
-  };
-}
-
-async function handleRequest<T>(dbAction: (args?: any) => Promise<T>) {
-  try {
-    const response = await dbAction();
-
-    return createResponse(response, null);
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      return createResponse(null, error.message);
-    }
-
-    return createResponse(null, 'Something went wrong');
-  }
-}
-
 // Get all bookmarks
 export async function getBookMarks() {
-  try {
-    const bookmark = await prisma.bookmark.findMany({
+  return handleRequest(
+    prisma.bookmark.findMany.bind(null, {
       include: {
         tags: true,
       },
-    });
-
-    return createResponse(bookmark, null);
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      return createResponse(null, error.message);
-    }
-
-    return createResponse(null, 'Something went wrong');
-  }
+    })
+  );
 }
 
 // Get a single bookmark
@@ -97,9 +59,6 @@ export async function createBookmark(formData: FormData) {
     const response = await prisma.bookmark.create({
       data: {
         ...bookmark,
-        tags: {
-          create: [{ name: 'Angular' }, { name: 'OOP Design Patterns' }],
-        },
       },
     });
 
